@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于 on-portal-shijiebei.com · 世界杯站点笔记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f4f8fa;
+            color: #1f2e38;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .page {
+            max-width: 840px;
+            margin: 0 auto;
+        }
+
+        /* 网格卡片背景 – 细网格 */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(0, 160, 150, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 160, 150, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* hero 段落 */
+        .blog-header {
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 140, 130, 0.25);
+        }
+
+        .blog-header h1 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #0b3d3a;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-header .meta {
+            font-size: 0.9rem;
+            color: #5e7a7a;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .intro {
+            background: rgba(235, 248, 245, 0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 20px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.5rem;
+            border-left: 6px solid #1a9e8f;
+            box-shadow: 0 4px 12px rgba(0, 90, 80, 0.06);
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            color: #1d3f3b;
+        }
+
+        /* 正文卡片风格 */
+        .text-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem 2rem 2rem 2.2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 90, 70, 0.06);
+            transition: box-shadow 0.2s ease;
+            border: 1px solid rgba(0, 150, 130, 0.1);
+        }
+
+        .text-card:hover {
+            box-shadow: 0 12px 28px rgba(0, 120, 100, 0.08);
+        }
+
+        .text-card h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #0a514a;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid #1a9e8f;
+            padding-left: 0.75rem;
+        }
+
+        .text-card p {
+            margin-bottom: 1rem;
+            color: #253e3c;
+        }
+
+        .text-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .text-card .highlight {
+            background: #e3f4f0;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 450;
+            color: #07544b;
+        }
+
+        .quote-box {
+            background: #eaf6f3;
+            border-left: 6px solid #1a9e8f;
+            padding: 1.4rem 1.8rem;
+            border-radius: 16px;
+            margin: 2rem 0 2.5rem 0;
+            font-style: normal;
+            color: #1d4b46;
+            box-shadow: inset 0 1px 8px rgba(0,100,90,0.04);
+        }
+
+        .quote-box p {
+            margin-bottom: 0.5rem;
+        }
+
+        .quote-box cite {
+            display: block;
+            margin-top: 0.45rem;
+            font-size: 0.9rem;
+            color: #3a6a65;
+            letter-spacing: 0.02em;
+        }
+
+        .faq-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            box-shadow: 0 8px 20px rgba(0, 90, 70, 0.05);
+            border: 1px solid rgba(0, 150, 130, 0.08);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #ddeae6;
+            padding-bottom: 1rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-q {
+            font-weight: 500;
+            color: #0b4b44;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+
+        .faq-q::before {
+            content: "▹";
+            color: #1a9e8f;
+        }
+
+        .faq-a {
+            color: #2b5350;
+            padding-left: 1.4rem;
+            font-size: 0.95rem;
+        }
+
+        .access-note {
+            background: #f1fbf9;
+            padding: 1.5rem 2rem;
+            border-radius: 28px;
+            text-align: center;
+            margin: 2.5rem 0 1.5rem 0;
+            border: 1px solid #b6ddd6;
+            font-size: 1rem;
+        }
+
+        .access-note a {
+            color: #0a6b60;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid #1a9e8f;
+            padding-bottom: 0.1rem;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .access-note a:hover {
+            border-bottom-color: #0b4b44;
+            color: #06433c;
+        }
+
+        .footer-note {
+            font-size: 0.8rem;
+            color: #6b8a85;
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #cde0db;
+            letter-spacing: 0.3px;
+        }
+
+        /* 移动端响应 */
+        @media (max-width: 600px) {
+            body {
+                padding: 1.2rem 0.8rem;
+            }
+
+            .blog-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .intro {
+                padding: 1.4rem 1.2rem;
+            }
+
+            .text-card {
+                padding: 1.5rem 1.2rem;
+                border-radius: 20px;
+            }
+
+            .quote-box {
+                padding: 1.2rem 1.2rem;
+                margin: 1.8rem 0;
+            }
+
+            .faq-summary {
+                padding: 1.2rem;
+            }
+
+            .access-note {
+                padding: 1.2rem 1rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .blog-header .meta {
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    <div class="page content">
+        <header class="blog-header">
+            <h1>一个关于世界杯的安静站点</h1>
+            <div class="meta">
+                <span>on-portal-shijiebei.com</span>
+                <span>· 站点笔记 ·</span>
+                <span>2025 · 春季</span>
+            </div>
+        </header>
+
+        <div class="intro">
+            <p>如果你曾因世界杯的庞大信息流而感到疲惫，如果你只是想找一个简洁、克制的起点——这个网站或许是你需要的地方。它不追求喧哗，只提供一种靠近的路径。</p>
+        </div>
+
+        <div class="text-card">
+            <h2>从一次安静的浏览开始</h2>
+            <p>互联网上关于<span class="highlight">世界杯</span>的资讯从未稀缺，但一个清晰、可信的入口点却并不常见。<strong>on-portal-shijiebei.com</strong> 最初的设想，就是成为这样一个门户：没有弹窗干扰，没有夸张的标题堆砌，只有经过梳理的信息框架与平实的叙述。你可以把它看作一份数字时代的观赛手记——不替代官方渠道，但帮你更快地找到方向。</p>
+            <p>整个站点围绕赛事本身展开，从历史脉络到当届看点，尽量保持客观与克制。页面间的链接并不复杂，你几乎不需要“学习”如何使用它。</p>
+        </div>
+
+        <div class="quote-box">
+            <p>“一个好的入口，不是把所有东西都堆在你面前，而是告诉你从哪儿开始看，然后安静地退到一边。”</p>
+            <cite>—— 来自站点设计手记中的一句话</cite>
+        </div>
+
+        <div class="text-card">
+            <h2>关于可信与边界</h2>
+            <p>我们并非赛事主办方，也不提供实时比分或独家直播。这个站点的角色更像一个整理者：将散落在不同角落的可靠信息（赛程、队伍、举办城市背景）汇聚在一个干净的页面里。所有引用的数据都会注明来源，不编造、不推测。</p>
+            <p>如果你发现任何内容存在偏差或时效性问题，欢迎通过页面底部的联系表单反馈——这正是站点持续更新的动力之一。</p>
+        </div>
+
+        <div class="faq-summary">
+            <div class="faq-item">
+                <div class="faq-q">这个网站和官方世界杯网站有什么不同？</div>
+                <div class="faq-a">更轻量，更侧重导航与背景梳理。不销售门票，不提供直播流。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">信息更新频率如何？</div>
+                <div class="faq-a">赛季期间每周更新1-2次，休赛期主要维护历史数据和基础架构。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">我可以信任这里的赛程时间吗？</div>
+                <div class="faq-a">我们会以国际足联官方公告为基准，并在页面顶部标注最后同步日期。</div>
+            </div>
+        </div>
+
+        <div class="text-card">
+            <h2>适合怎样的阅读场景</h2>
+            <p>无论是赛前想快速了解分组情况，还是赛后想回顾某一支球队的晋级之路，你都可以在这个站点里找到结构清晰的页面。没有自动播放的视频，没有浮层订阅弹窗——只有文字、表格和必要的图片。</p>
+            <p>移动端的排版也经过调整：卡片间距、字体大小都尽量适配小屏幕，在通勤或咖啡馆里打开也不会觉得拥挤。</p>
+        </div>
+
+        <div class="access-note">
+            <p>如果你想先看一眼这个站点的模样，可以前往 <a href="https://on-portal-shijiebei.com">世界杯</a> 页面。它不承诺任何奇迹，只希望成为你了解赛事的一个平静起点。</p>
+        </div>
+
+        <div class="footer-note">
+            on-portal-shijiebei.com · 简洁叙述 · 可靠入口
+        </div>
+    </div>
+</body>
+</html>
